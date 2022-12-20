@@ -26,7 +26,11 @@ public class PuzzleGrid : MonoBehaviour
     {
         for (int i = 0; i < puzzlePieces.Length; i++)
         {
+<<<<<<< Updated upstream
             if (puzzlePieces[i].PiecePos != puzzlePieces[i].PieceMaterialPos) 
+=======
+            if (puzzlePieces[i].PieceCorrectPosition != puzzlePieces[i].CurrentPosition) 
+>>>>>>> Stashed changes
             {
                 return false;
             }

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+<<<<<<< Updated upstream
     #region Singleton installments
     public static UIManager Instance;
 
@@ -22,6 +23,17 @@ public class UIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     #endregion
+=======
+
+
+    [Header("Pause menu Canvas")]
+    [SerializeField] private Canvas pauseMenuCanvas;
+    private GameManager gameManager;
+
+    [Header("Sprite Canvas")]
+    [SerializeField] private Canvas spriteCanvas;
+    [SerializeField] private Image spriteImage;
+>>>>>>> Stashed changes
 
 
     // Start is called before the first frame update
@@ -33,7 +45,45 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+<<<<<<< Updated upstream
         
+=======
+        if (Input.GetKeyDown(KeyCode.P) && gameManager.isGameStarted && !gameManager.isGameOver)
+        {
+            ManagePauseMenu();
+        }
+    }
+
+    public void PickUpActive(Sprite sprite)
+    {
+        spriteImage = spriteCanvas.GetComponentInChildren<Image>();
+        spriteImage.sprite = sprite;
+    }
+
+    public void ShowExtraInfo(string info)
+    {
+
+    }
+
+
+
+    public void ManagePauseMenu()
+    {
+        if (pauseMenuCanvas.isActiveAndEnabled)
+        {
+            CloseUICanvas(pauseMenuCanvas);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            gameManager.isGamePaused = false;
+        }
+        else
+        {
+            OpenUICanvas(pauseMenuCanvas);
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+            gameManager.isGamePaused = true;
+        }
+>>>>>>> Stashed changes
     }
 
     // Methods to open and close the menus of the UI
@@ -50,6 +100,7 @@ public class UIManager : MonoBehaviour
 
     public void LoadScene(int sceneInt)
     {
+        gameManager.isGamePaused = false;
         SceneManager.LoadScene(sceneInt);
     }
 
