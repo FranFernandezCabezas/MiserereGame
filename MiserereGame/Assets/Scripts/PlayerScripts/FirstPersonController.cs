@@ -112,14 +112,17 @@ namespace StarterAssets
 
 		private void Update()
 		{
-			JumpAndGravity();
-			GroundedCheck();
-			Move();
-		}
+			if (!GameManager.Instance.isGameOver && !GameManager.Instance.isGamePaused)
+			{
+                JumpAndGravity();
+                GroundedCheck();
+                Move();
+            }
+        }
 
 		private void LateUpdate()
 		{
-			CameraRotation();
+			if (!GameManager.Instance.isGameOver && !GameManager.Instance.isGamePaused) CameraRotation();
 		}
 
 		private void GroundedCheck()

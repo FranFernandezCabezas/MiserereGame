@@ -16,22 +16,35 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
     }
     #endregion
 
-    [SerializeField] private bool isGameStarted, isGameOver;
+    [SerializeField] public bool isGameStarted, isGameOver, isGamePaused;
     [SerializeField] private UIManager uiManager;
     // Start is called before the first frame update
     void Start()
     {
+        isGameOver = false;
+        isGamePaused = false;
+        isGameStarted = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void StartGame()
+    {
+        isGameStarted = true;
+    }
+
+    public void MakeGameOver()
+    {
+        isGameOver = true;
     }
 }
