@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PuzzleGrid : MonoBehaviour
 {
-    [Header("Puzzle array")]
-    [Tooltip("Shows the full content of the array containing the puzzle pieces")]
-    [SerializeField] private PuzzlePiece[] puzzlePieces;
+    [Header("Puzzle list")]
+    [Tooltip("Shows the full content of the list containing the puzzle pieces")]
+    [SerializeField] private List<PuzzlePiece> puzzlePieces;
     [Tooltip("-1 = No piece selected")]
     [SerializeField] private int selectedPuzzlePiece = -1;
     public bool isPuzzleDone;
@@ -15,14 +16,14 @@ public class PuzzleGrid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        puzzlePieces = gameObject.GetComponentsInChildren<PuzzlePiece>();
+        puzzlePieces = gameObject.GetComponentsInChildren<PuzzlePiece>().ToList();
         isPuzzleDone = false;
     }
 
     // Checks if all the piece and materials are in their right place
     private bool CheckPuzzleSolved()
     {
-        for (int i = 0; i < puzzlePieces.Length; i++)
+        for (int i = 0; i < puzzlePieces.Count; i++)
         {
             Debug.Log(puzzlePieces[i].PieceCorrectPosition + ", i = " + i);
             if (puzzlePieces[i].PieceCorrectPosition != puzzlePieces[i].CurrentPosition) 
@@ -72,5 +73,10 @@ public class PuzzleGrid : MonoBehaviour
 
         selectedPuzzlePiece = -1;
         isPuzzleDone = CheckPuzzleSolved();
+    }
+
+    public void AddPuzzlePieceToList(PuzzlePiece puzzlePiece)
+    {
+        puzzlePieces.Add(puzzlePiece);
     }
 }
