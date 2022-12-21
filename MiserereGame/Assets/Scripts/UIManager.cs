@@ -10,29 +10,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Pause menu Canvas")]
     [SerializeField] private Canvas pauseMenuCanvas;
-
-
-    #region Singleton installments
-    public static UIManager Instance;
     private GameManager gameManager;
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            if (Instance.pauseMenuCanvas == null)
-            {
-                Instance.pauseMenuCanvas = pauseMenuCanvas;
-            }
-            Destroy(gameObject);
-        }
-        DontDestroyOnLoad(gameObject);
-    }
-    #endregion
 
     // Start is called before the first frame update
     void Start()
