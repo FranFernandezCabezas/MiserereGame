@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,38 +11,53 @@ public class UIManager : MonoBehaviour
 
     [Header("Pause menu Canvas")]
     [SerializeField] private Canvas pauseMenuCanvas;
-    private GameManager gameManager;
+    [Space(10)]
+    [SerializeField] private Canvas textCanvas;
+    [SerializeField] private TMP_Text text;
 
+    private GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameManager.Instance;
+        gameManager.StartGame();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P) && gameManager.isGameStarted && !gameManager.isGameOver)
+        if (Input.GetKeyDown(KeyCode.Escape) && gameManager.isGameStarted && !gameManager.isGameOver)
         {
             ManagePauseMenu();
         }
     }
 
+    public void ShowPickUpText(string pickUpText)
+    {
+        gameManager.PauseGame();
+        textCanvas.gameObject.SetActive(true);
+        text.text = pickUpText;
+    }
+
+    public void ClosePickUpText()
+    {
+        textCanvas.gameObject.SetActive(false);
+        text.text = "";
+        gameManager.ResumeGame();
+    }
+
+
     public void ManagePauseMenu()
     {
         if (pauseMenuCanvas.isActiveAndEnabled)
         {
+            gameManager.ResumeGame();
             CloseUICanvas(pauseMenuCanvas);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            gameManager.isGamePaused = false;
         }
         else
         {
+            gameManager.PauseGame();
             OpenUICanvas(pauseMenuCanvas);
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
-            gameManager.isGamePaused = true;
         }
     }
 

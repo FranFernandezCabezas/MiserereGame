@@ -9,21 +9,37 @@ public class PickUp : MonoBehaviour
     [Tooltip("The puzzle grid where the attached piece needs to go")]
     [SerializeField] PuzzleGrid puzzlePieceGrid;
 
+    [Space(10)]
+    [Header("Phrase")]
     [Tooltip("If the character needs to say something when picking this up.")]
+    [TextArea(0, 10)]
     [SerializeField] string phrase = "";
+
+    private UIManager uiManager;
 
     private void Start()
     {
+        uiManager = FindObjectOfType<UIManager>();
     }
 
     private void OnMouseDown()
     {
-        if (!attachedPuzzlePiece.activeSelf)
+        if (attachedPuzzlePiece != null)
         {
-            attachedPuzzlePiece.SetActive(true);
-            puzzlePieceGrid.AddPuzzlePieceToList(attachedPuzzlePiece.GetComponent<PuzzlePiece>());
-            Destroy(gameObject);
+            if (!attachedPuzzlePiece.activeSelf)
+            {
+                attachedPuzzlePiece.SetActive(true);
+                puzzlePieceGrid.AddPuzzlePieceToList(attachedPuzzlePiece.GetComponent<PuzzlePiece>());
+                if (phrase != "")
+                {
+                    uiManager.ShowPickUpText(phrase);
+                }
+                Destroy(gameObject);
+            }
+        }
+        else if (phrase != "")
+        {
+            uiManager.ShowPickUpText(phrase);
         }
     }
-
 }
