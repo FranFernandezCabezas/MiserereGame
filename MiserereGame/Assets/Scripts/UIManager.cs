@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
-        gameManager.StartGame();
+        if (gameManager != null) gameManager.StartGame();
     }
 
     // Update is called once per frame
